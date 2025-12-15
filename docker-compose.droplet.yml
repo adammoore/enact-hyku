@@ -1,0 +1,224 @@
+# Docker Compose for Digital Ocean Droplet Deployment
+# Builds containers locally instead of using pre-built images
+
+version: '3.8'
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile
+    target: hyku-web
+    args:
+      - ASSETS_PRECOMPILE=true
+  env_file:
+    - .env.droplet
+  volumes:
+    - uploads:/app/samvera/hyrax-webapp/public/uploads
+    - assets:/app/samvera/hyrax-webapp/public/assets
+    - cache:/app/samvera/hyrax-webapp/tmp/cache
+  networks:
+    - hyku
+
+volumes:
+  assets:
+  cache:
+  db:
+  fcrepo:
+  redis:
+  solr:
+  uploads:
+  zoo:
+  zk:
+
+networks:
+  hyku:
+    driver: bridge
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15
+    env_file:
+      - .env.droplet
+    environment:
+      - POSTGRES_DB=${DB_NAME:-hyku}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-hyku}
+      - POSTGRES_USER=${DB_USER:-postgres}
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - hyku
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache & Job Queue
+  redis:
+    image: redis:7-alpine
+    command: redis-server
+    volumes:
+      - redis:/data
+    networks:
+      - hyku
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ZooKeeper (for Solr Cloud)
+  zoo:
+    image: zookeeper:3.6.2
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zoo:2888:3888;2181
+      - ZOO_4LW_COMMANDS_WHITELIST=mntr,srvr,ruok,conf
+    volumes:
+      - zoo:/data
+      - zk:/datalog
+    networks:
+      - hyku
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'ruok' | nc -w 2 -q 2 localhost 2181 | grep imok || exit 1"]
+      interval: 10s
+      timeout: 8s
+      retries: 5
+
+  # Solr Search Index
+  solr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: hyku-solr
+    environment:
+      - OOM=script
+      - SOLR_ADMIN_USER=admin
+      - SOLR_ADMIN_PASSWORD=admin
+      - SOLR_COLLECTION=hydra-development
+      - SOLR_CLOUD_BOOTSTRAP=yes
+      - SOLR_ENABLE_CLOUD_MODE=yes
+      - SOLR_ENABLE_AUTHENTICATION=yes
+      - ZK_HOST=zoo:2181
+    user: root
+    command: bash -c "
+      chown -R 8983:8983 /var/solr
+      && ./bin/solr zk cp file:/var/solr/data/security.json zk:/security.json
+      && runuser -u solr -- solr-foreground"
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr:/var/solr
+    networks:
+      - hyku
+    depends_on:
+      zoo:
+        condition: service_healthy
+    healthcheck:
+      test: curl -sf http://$$SOLR_ADMIN_USER:$$SOLR_ADMIN_PASSWORD@solr:8983/solr/admin/cores?action=STATUS || exit 1
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  # Fedora Repository
+  fcrepo:
+    image: ghcr.io/samvera/fcrepo4:4.7.5
+    env_file:
+      - .env.droplet
+    environment:
+      - JAVA_OPTS=${JAVA_OPTS} -Dfcrepo.modeshape.configuration="classpath:/config/file-simple/repository.json" -Dfcrepo.object.directory="/data/objects" -Dfcrepo.binary.directory="/data/binaries"
+    ports:
+      - "8080:8080"
+    volumes:
+      - fcrepo:/data
+    networks:
+      - hyku
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/fcrepo/rest || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Initialize app (migrations, Solr setup)
+  initialize_app:
+    <<: *app
+    environment:
+      - CONFDIR=/app/samvera/hyrax-webapp/solr/conf
+    entrypoint: ["sh", "-c"]
+    command:
+      - >
+        echo "Uploading Solr configset..." &&
+        solrcloud-upload-configset.sh /app/samvera/hyrax-webapp/solr/conf &&
+        solrcloud-assign-configset.sh &&
+        echo "Running database migrations..." &&
+        db-migrate-seed.sh &&
+        echo "Initialization complete!"
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      fcrepo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Background Worker
+  worker:
+    <<: *app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: hyku-worker
+      args:
+        - ASSETS_PRECOMPILE=true
+    command: ./bin/worker
+    depends_on:
+      initialize_app:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Web Application
+  web:
+    <<: *app
+    ports:
+      - "3000:3000"
+    depends_on:
+      initialize_app:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      fcrepo:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+      worker:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    networks:
+      - hyku
+    depends_on:
+      web:
+        condition: service_started
