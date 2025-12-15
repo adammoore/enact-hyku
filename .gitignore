@@ -1,0 +1,96 @@
+# ENACT Hyku .gitignore
+
+# Environment files with secrets
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Digital Ocean secrets
+.digitalocean/secrets.yaml
+
+# Heroku local
+.heroku/
+
+# Ruby/Rails
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+.bundle/
+vendor/bundle
+
+# Rails
+/.yardoc
+/_yardoc
+/doc/
+/rdoc
+
+# If using SQLite
+/*.sqlite
+/*.sqlite3
+/*.sqlite3-journal
+/*.sqlite3-*
+
+# If using PostgreSQL or MySQL in development
+/config/database.yml
+
+# Ignore uploaded files
+/public/system
+/public/uploads
+
+# Ignore precompiled assets
+/public/assets
+/public/packs
+/public/packs-test
+
+# Ignore node modules
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore master key for decrypting credentials
+/config/master.key
+/config/credentials/*.key
+
+# Docker
+docker-compose.override.yml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+log/*.log
+
+# Temporary files
+tmp/**/*
+!tmp/.keep
+!tmp/pids/.keep
+!tmp/cache/.keep
+!tmp/sockets/.keep
+
+# Storage
+storage/*
+!storage/.keep
+
+# Backups
+*.bak
+*.backup

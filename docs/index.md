@@ -42,6 +42,7 @@ The [PRVoices schema](schema.html) addresses these gaps by providing:
 - **[PRVoices Schema](schema.html)**: Technical overview of the metadata schema
 - **[Research Practices](research-practices.html)**: How the schema reflects research practices and processes
 - **[Installation](installation.html)**: Setting up your own instance
+- **[Digital Ocean Deployment](https://github.com/adammoore/enact-hyku/blob/main/DIGITALOCEAN_DEPLOYMENT.md)**: Production deployment guide
 
 ## Project Status
 

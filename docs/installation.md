@@ -11,21 +11,27 @@ This guide covers installing and configuring ENACT Hyku for practice research us
 
 ENACT Hyku can be deployed in multiple ways:
 
-1. **Heroku Deployment** (Recommended for quick start)
+1. **Digital Ocean App Platform** (Recommended)
    - Automatic deployment from GitHub
-   - Managed infrastructure
-   - See **[HEROKU_DEPLOYMENT.md](https://github.com/adammoore/enact-hyku/blob/main/HEROKU_DEPLOYMENT.md)** for complete guide
-   - Requires external Fedora and Solr services
+   - Native Docker support
+   - All services included (Fedora, Solr, PostgreSQL, Redis)
+   - Cost-effective (~$90/month)
+   - See **[DIGITALOCEAN_DEPLOYMENT.md](https://github.com/adammoore/enact-hyku/blob/main/DIGITALOCEAN_DEPLOYMENT.md)** for complete guide
 
 2. **Docker/Docker Compose** (For local development)
    - Full local development environment
    - Included Fedora, Solr, PostgreSQL, Redis
    - Instructions below
 
-3. **Kubernetes/AWS** (For production at scale)
+3. **Kubernetes (DOKS)** (For production at scale)
    - Enterprise deployment
    - High availability
-   - See Samvera Hyku documentation
+   - Maximum scalability
+
+4. **Heroku** (Alternative PaaS)
+   - Requires external Fedora and Solr services
+   - More expensive than Digital Ocean
+   - See **[HEROKU_DEPLOYMENT.md](https://github.com/adammoore/enact-hyku/blob/main/HEROKU_DEPLOYMENT.md)** for details
 
 ## Prerequisites
 

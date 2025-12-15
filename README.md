@@ -27,18 +27,35 @@ The repository implements the PRVoices metadata schema, which extends traditiona
 
 ## Quick Start
 
-### Heroku Deployment (Recommended)
+### Digital Ocean Deployment (Recommended)
 
-Deploy to Heroku with automatic deployment from GitHub:
+Deploy to Digital Ocean App Platform with automatic deployment from GitHub:
 
 1. **Merge Hyku codebase**:
    ```bash
    ./scripts/merge_hyku.sh
    ```
 
-2. **Follow Heroku deployment guide**: See [HEROKU_DEPLOYMENT.md](HEROKU_DEPLOYMENT.md)
+2. **Deploy to Digital Ocean**:
+   ```bash
+   # Install doctl (Digital Ocean CLI)
+   brew install doctl  # macOS
 
-3. **Configure automatic deployment** from GitHub main branch in Heroku dashboard
+   # Authenticate
+   doctl auth init
+
+   # Create app from spec
+   doctl apps create --spec .digitalocean/app.yaml
+   ```
+
+3. **Configure environment variables and domain** - See [DIGITALOCEAN_DEPLOYMENT.md](DIGITALOCEAN_DEPLOYMENT.md)
+
+**Why Digital Ocean?**
+- Native Docker support (Hyku is Docker-native)
+- All services included (Fedora, Solr, PostgreSQL, Redis)
+- Automatic GitHub deployment
+- Cost-effective (~$90/month vs $200-400 on Heroku)
+- S3-compatible Spaces for file storage
 
 ### Local Development
 
@@ -46,9 +63,12 @@ Prerequisites:
 - Docker (tested with version 28.5.2)
 - Docker Compose (tested with version 2.40.3)
 - macOS or Linux
-- Internet connection for initial build
 
-Instructions coming soon once Hyku codebase is merged.
+After merging Hyku codebase:
+```bash
+docker compose build
+docker compose up
+```
 
 ## Documentation
 
