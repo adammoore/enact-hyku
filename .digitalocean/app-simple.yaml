@@ -47,6 +47,21 @@ services:
         value: ${db.DATABASE_URL}
       - key: REDIS_URL
         value: redis://redis:6379/0
+      - key: SOLR_URL
+        value: http://solr:8983/solr/
+
+  # Solr Search Engine
+  - name: solr
+    github:
+      repo: adammoore/enact-hyku
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    build_command: docker build --target hyku-solr -t $IMAGE_NAME .
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    internal_ports:
+      - 8983
 
   # Redis Cache
   - name: redis
