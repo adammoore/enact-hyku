@@ -64,7 +64,7 @@ This merges Samvera Hyku while preserving ENACT documentation and configuration.
 1. Go to **Spaces** in DO dashboard
 2. Click **Create a Space**
 3. Settings:
-   - Region: Same as your app (e.g., NYC3)
+   - Region: Same as your app (e.g., AMS3 - Amsterdam)
    - Name: `enact-hyku-production`
    - CDN: Enable (recommended)
 4. Create **API Key** for Spaces:
@@ -132,9 +132,9 @@ APP_ID=your-app-id
 doctl apps update $APP_ID --env SECRET_KEY_BASE=$(openssl rand -hex 64)
 doctl apps update $APP_ID --env AWS_ACCESS_KEY_ID=your_spaces_key
 doctl apps update $APP_ID --env AWS_SECRET_ACCESS_KEY=your_spaces_secret
-doctl apps update $APP_ID --env AWS_REGION=nyc3
+doctl apps update $APP_ID --env AWS_REGION=ams3
 doctl apps update $APP_ID --env AWS_BUCKET=enact-hyku-production
-doctl apps update $APP_ID --env S3_ENDPOINT=https://nyc3.digitaloceanspaces.com
+doctl apps update $APP_ID --env S3_ENDPOINT=https://ams3.digitaloceanspaces.com
 ```
 
 #### Via Dashboard:
@@ -147,9 +147,9 @@ doctl apps update $APP_ID --env S3_ENDPOINT=https://nyc3.digitaloceanspaces.com
 SECRET_KEY_BASE=<generate with: openssl rand -hex 64>
 AWS_ACCESS_KEY_ID=<your Spaces access key>
 AWS_SECRET_ACCESS_KEY=<your Spaces secret key>
-AWS_REGION=nyc3
+AWS_REGION=ams3
 AWS_BUCKET=enact-hyku-production
-S3_ENDPOINT=https://nyc3.digitaloceanspaces.com
+S3_ENDPOINT=https://ams3.digitaloceanspaces.com
 ```
 
 **Optional but Recommended**:
@@ -411,7 +411,7 @@ doctl apps update $APP_ID --spec .digitalocean/app.yaml
 ### Enable CDN for Spaces
 
 1. When creating Space, enable CDN
-2. Use CDN endpoint for assets: `https://enact-hyku-production.nyc3.cdn.digitaloceanspaces.com`
+2. Use CDN endpoint for assets: `https://enact-hyku-production.ams3.cdn.digitaloceanspaces.com`
 
 ### Database Connection Pooling
 
@@ -610,7 +610,7 @@ doctl apps run $APP_ID --component web -- bundle exec rails hyku:export_fedora
 
 **Full Application Backup**:
 1. Database backup
-2. Spaces sync: `aws s3 sync s3://bucket local-backup/ --endpoint-url=https://nyc3.digitaloceanspaces.com`
+2. Spaces sync: `aws s3 sync s3://bucket local-backup/ --endpoint-url=https://ams3.digitaloceanspaces.com`
 3. Fedora export
 4. Configuration backup (environment variables)
 

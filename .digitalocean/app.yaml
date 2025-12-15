@@ -2,7 +2,7 @@
 # Deploy full Samvera Hyku stack with PRVoices schema support
 
 name: enact-hyku
-region: nyc
+region: ams
 
 # Services Configuration
 services:
