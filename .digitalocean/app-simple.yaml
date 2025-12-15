@@ -1,0 +1,63 @@
+# Simplified Digital Ocean App Platform Spec for ENACT Hyku
+# Start with essential services only
+
+name: enact-hyku
+region: lon
+
+# Services Configuration
+services:
+  # Web Application (Rails)
+  - name: web
+    github:
+      repo: adammoore/enact-hyku
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xs
+    health_check:
+      http_path: /
+    envs:
+      - key: RAILS_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: DISABLE_SPRING
+        value: "1"
+      - key: ASSETS_PRECOMPILE
+        scope: BUILD_TIME
+        value: "false"
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: HYKU_MULTITENANT
+        value: "true"
+      - key: HYKU_ADMIN_ONLY_TENANT_CREATION
+        value: "true"
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${db.DATABASE_URL}
+      - key: REDIS_URL
+        value: redis://redis:6379/0
+
+  # Redis Cache
+  - name: redis
+    image:
+      registry_type: DOCKER_HUB
+      registry: library
+      repository: redis
+      tag: "7-alpine"
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    internal_ports:
+      - 6379
+
+# Databases
+databases:
+  - name: db
+    engine: PG
+    version: "15"
+    production: false
