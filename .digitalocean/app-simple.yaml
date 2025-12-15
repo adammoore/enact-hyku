@@ -18,6 +18,7 @@ services:
     instance_size_slug: basic-xs
     health_check:
       http_path: /
+      protocol: http
     envs:
       - key: RAILS_ENV
         value: production
