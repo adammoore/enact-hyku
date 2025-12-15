@@ -1,12 +1,10 @@
 # Digital Ocean App Platform Specification for ENACT Hyku
-# Deploy full Samvera Hyku stack with PRVoices schema support
+# This is a deployment version with placeholders for secrets
 
 name: sea-lion-app
 region: lon
 
-# Services Configuration
 services:
-  # Web Application (Rails)
   - name: web
     github:
       repo: adammoore/enact-hyku
@@ -21,19 +19,6 @@ services:
     envs:
       - key: RAILS_ENV
         value: production
-        scope: RUN_AND_BUILD_TIME
-      - key: SECRET_KEY_BASE
-        scope: RUN_AND_BUILD_TIME
-        type: SECRET
-      - key: DATABASE_URL
-        scope: BUILD_TIME
-        value: postgresql://user:pass@localhost/notused
-      - key: DISABLE_SPRING
-        scope: BUILD_TIME
-        value: "1"
-      - key: ASSETS_PRECOMPILE
-        scope: BUILD_TIME
-        value: "false"
       - key: RAILS_LOG_TO_STDOUT
         value: "true"
       - key: RAILS_SERVE_STATIC_FILES
@@ -43,40 +28,39 @@ services:
       - key: HYKU_ADMIN_ONLY_TENANT_CREATION
         value: "true"
       - key: HYKU_ADMIN_HOST
+        scope: RUN_TIME
         value: ${APP_DOMAIN}
       - key: HYKU_ROOT_HOST
+        scope: RUN_TIME
         value: ${APP_DOMAIN}
+      - key: SECRET_KEY_BASE
+        scope: RUN_TIME
+        type: SECRET
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
       - key: REDIS_URL
+        scope: RUN_TIME
         value: ${redis.REDIS_URL}
       - key: SOLR_URL
         value: http://solr:8983/solr/hyku
       - key: FEDORA_URL
         value: http://fcrepo:8080/fcrepo/rest
       - key: AWS_ACCESS_KEY_ID
+        scope: RUN_TIME
         type: SECRET
-        value: ${AWS_ACCESS_KEY_ID}
       - key: AWS_SECRET_ACCESS_KEY
+        scope: RUN_TIME
         type: SECRET
-        value: ${AWS_SECRET_ACCESS_KEY}
       - key: AWS_REGION
-        value: ${AWS_REGION}
+        value: lon1
       - key: AWS_BUCKET
-        value: ${AWS_BUCKET}
-      - key: SMTP_ADDRESS
-        value: ${SMTP_ADDRESS}
-      - key: SMTP_PORT
-        value: ${SMTP_PORT}
-      - key: SMTP_USER_NAME
-        type: SECRET
-        value: ${SMTP_USER_NAME}
-      - key: SMTP_PASSWORD
-        type: SECRET
-        value: ${SMTP_PASSWORD}
+        value: enact-hyku-prod
+      - key: S3_ENDPOINT
+        value: https://lon1.digitaloceanspaces.com
+      - key: S3_HOSTNAME
+        value: lon1.digitaloceanspaces.com
 
-  # Background Workers (Sidekiq)
   - name: worker
     github:
       repo: adammoore/enact-hyku
@@ -89,29 +73,22 @@ services:
     envs:
       - key: RAILS_ENV
         value: production
-        scope: RUN_AND_BUILD_TIME
-      - key: SECRET_KEY_BASE
-        scope: RUN_AND_BUILD_TIME
-        type: SECRET
-      - key: DATABASE_URL
-        scope: BUILD_TIME
-        value: postgresql://user:pass@localhost/notused
-      - key: DISABLE_SPRING
-        scope: BUILD_TIME
-        value: "1"
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
       - key: REDIS_URL
+        scope: RUN_TIME
         value: ${redis.REDIS_URL}
       - key: SOLR_URL
         value: http://solr:8983/solr/hyku
       - key: FEDORA_URL
         value: http://fcrepo:8080/fcrepo/rest
+      - key: SECRET_KEY_BASE
+        scope: RUN_TIME
+        type: SECRET
       - key: SIDEKIQ_CONCURRENCY
         value: "5"
 
-  # Solr Search Service
   - name: solr
     image:
       registry_type: DOCKER_HUB
@@ -128,7 +105,6 @@ services:
       - key: SOLR_HEAP
         value: 1g
 
-  # Fedora Repository
   - name: fcrepo
     image:
       registry_type: DOCKER_HUB
@@ -143,7 +119,6 @@ services:
       - key: CATALINA_OPTS
         value: -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC
 
-# Databases and Caches
 databases:
   - name: db
     engine: PG
@@ -156,7 +131,6 @@ databases:
     version: "7"
     production: true
 
-# Jobs (one-time tasks)
 jobs:
   - name: db-migrate
     kind: PRE_DEPLOY
@@ -168,16 +142,6 @@ jobs:
     envs:
       - key: RAILS_ENV
         value: production
-        scope: RUN_AND_BUILD_TIME
-      - key: SECRET_KEY_BASE
-        scope: RUN_AND_BUILD_TIME
-        type: SECRET
-      - key: DATABASE_URL
-        scope: BUILD_TIME
-        value: postgresql://user:pass@localhost/notused
-      - key: DISABLE_SPRING
-        scope: BUILD_TIME
-        value: "1"
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
