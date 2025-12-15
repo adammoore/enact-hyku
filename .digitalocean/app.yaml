@@ -1,7 +1,7 @@
 # Digital Ocean App Platform Specification for ENACT Hyku
 # Deploy full Samvera Hyku stack with PRVoices schema support
 
-name: sea-lion-app
+name: enact-hyku
 region: lon
 
 # Services Configuration

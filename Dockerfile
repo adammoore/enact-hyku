@@ -20,7 +20,10 @@ RUN bundle install --jobs "$(nproc)"
 ARG APP_PATH=.
 COPY --chown=1001:101 $APP_PATH /app/samvera/hyrax-webapp
 
-RUN RAILS_ENV=production SECRET_KEY_BASE=`bin/rails secret` DB_ADAPTER=nulldb DB_URL='postgresql://fake' bundle exec rake assets:precompile && yarn install
+RUN yarn install
+RUN if [ "${ASSETS_PRECOMPILE:-true}" != "false" ]; then \
+      RAILS_ENV=production SECRET_KEY_BASE=`bin/rails secret` DB_ADAPTER=nulldb DB_URL='postgresql://fake' bundle exec rake assets:precompile; \
+    fi
 CMD ./bin/web
 
 FROM hyku-web AS hyku-worker
