@@ -33,20 +33,4 @@ if ENV['ASSETS_PRECOMPILE'] == 'false'
     end
   end
 
-  # Stub out Hyrax::FlexibleSchema which tries to query during initialization
-  # This needs to happen before Rails loads Hyrax
-  module HyraxBuildStubs
-    def self.stub_flexible_schema!
-      return unless defined?(Hyrax)
-
-      module Hyrax
-        class FlexibleSchema
-          def self.current_schema_id; nil; end
-          def self.current_schema; nil; end
-          def self.find(*); nil; end
-          def self.all; []; end
-        end
-      end
-    end
-  end
 end
