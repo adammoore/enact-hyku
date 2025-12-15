@@ -99,6 +99,9 @@ services:
       - key: DISABLE_SPRING
         scope: BUILD_TIME
         value: "1"
+      - key: ASSETS_PRECOMPILE
+        scope: BUILD_TIME
+        value: "false"
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
@@ -178,6 +181,9 @@ jobs:
       - key: DISABLE_SPRING
         scope: BUILD_TIME
         value: "1"
+      - key: ASSETS_PRECOMPILE
+        scope: BUILD_TIME
+        value: "false"
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
