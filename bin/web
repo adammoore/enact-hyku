@@ -7,11 +7,4 @@
 `mkdir -p /app/samvera/branding`
 `ln -snf /app/samvera/branding /app/samvera/hyrax-webapp/public/branding`
 
-# Compile assets on first start if they don't exist (happens when ASSETS_PRECOMPILE=false during build)
-unless Dir.exist?('/app/samvera/hyrax-webapp/public/assets') &&
-       !Dir.empty?('/app/samvera/hyrax-webapp/public/assets')
-  puts "Assets not found, compiling on first start..."
-  `bundle exec rails assets:precompile`
-end
-
 exec "bundle exec puma -v -b tcp://0.0.0.0:3000"
