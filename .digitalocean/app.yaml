@@ -21,6 +21,16 @@ services:
     envs:
       - key: RAILS_ENV
         value: production
+        scope: RUN_AND_BUILD_TIME
+      - key: SECRET_KEY_BASE
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: DATABASE_URL
+        scope: BUILD_TIME
+        value: postgresql://user:pass@localhost/notused
+      - key: DISABLE_SPRING
+        scope: BUILD_TIME
+        value: "1"
       - key: RAILS_LOG_TO_STDOUT
         value: "true"
       - key: RAILS_SERVE_STATIC_FILES
@@ -33,10 +43,8 @@ services:
         value: ${APP_DOMAIN}
       - key: HYKU_ROOT_HOST
         value: ${APP_DOMAIN}
-      - key: SECRET_KEY_BASE
-        type: SECRET
-        value: ${SECRET_KEY_BASE}
       - key: DATABASE_URL
+        scope: RUN_TIME
         value: ${db.DATABASE_URL}
       - key: REDIS_URL
         value: ${redis.REDIS_URL}
@@ -78,7 +86,18 @@ services:
     envs:
       - key: RAILS_ENV
         value: production
+        scope: RUN_AND_BUILD_TIME
+      - key: SECRET_KEY_BASE
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
       - key: DATABASE_URL
+        scope: BUILD_TIME
+        value: postgresql://user:pass@localhost/notused
+      - key: DISABLE_SPRING
+        scope: BUILD_TIME
+        value: "1"
+      - key: DATABASE_URL
+        scope: RUN_TIME
         value: ${db.DATABASE_URL}
       - key: REDIS_URL
         value: ${redis.REDIS_URL}
@@ -86,9 +105,6 @@ services:
         value: http://solr:8983/solr/hyku
       - key: FEDORA_URL
         value: http://fcrepo:8080/fcrepo/rest
-      - key: SECRET_KEY_BASE
-        type: SECRET
-        value: ${SECRET_KEY_BASE}
       - key: SIDEKIQ_CONCURRENCY
         value: "5"
 
@@ -149,5 +165,16 @@ jobs:
     envs:
       - key: RAILS_ENV
         value: production
+        scope: RUN_AND_BUILD_TIME
+      - key: SECRET_KEY_BASE
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
       - key: DATABASE_URL
+        scope: BUILD_TIME
+        value: postgresql://user:pass@localhost/notused
+      - key: DISABLE_SPRING
+        scope: BUILD_TIME
+        value: "1"
+      - key: DATABASE_URL
+        scope: RUN_TIME
         value: ${db.DATABASE_URL}
