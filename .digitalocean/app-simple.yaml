@@ -17,8 +17,7 @@ services:
     instance_count: 1
     instance_size_slug: basic-xs
     health_check:
-      http_path: /
-      protocol: http
+      http_path: /up
     envs:
       - key: RAILS_ENV
         value: production
