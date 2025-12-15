@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
+puts "Starting web container setup..."
+
 `echo "$GOOGLE_OAUTH_PRIVATE_KEY_VALUE" | base64 -d > prod-cred.p12` unless ENV['GOOGLE_OAUTH_PRIVATE_KEY_VALUE'].to_s.strip.empty?
 
 # Ensure the directory exists and create the symbolic link
@@ -7,4 +9,13 @@
 `mkdir -p /app/samvera/branding`
 `ln -snf /app/samvera/branding /app/samvera/hyrax-webapp/public/branding`
 
+# Run database migrations
+puts "Running database migrations..."
+result = `bundle exec rails db:migrate 2>&1`
+puts result
+if $?.exitstatus != 0
+  puts "WARNING: Database migration failed, but continuing..."
+end
+
+puts "Starting Puma web server on port 3000..."
 exec "bundle exec puma -v -b tcp://0.0.0.0:3000"
