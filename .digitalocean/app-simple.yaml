@@ -23,7 +23,7 @@ services:
         value: production
       - key: SECRET_KEY_BASE
         scope: RUN_AND_BUILD_TIME
-        type: SECRET
+        value: "760e18d6de5eeea8ce99ad914b0f0e68ad7ad6dd2140a58b831fb425cea8c00db2e26a87c1523599eec7f2b03746aee959a9b07e6a49b1b5d7413a9253258eee"
       - key: DISABLE_SPRING
         value: "1"
       - key: ASSETS_PRECOMPILE
