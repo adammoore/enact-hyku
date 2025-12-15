@@ -1,0 +1,25 @@
+title: ENACT Hyku
+description: Practice Research Repository - Implementing the PRVoices Schema
+theme: jekyll-theme-cayman
+baseurl: /enact-hyku
+url: https://adammoore.github.io
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: PRVoices Schema
+    url: /schema
+  - title: Research Practices
+    url: /research-practices
+  - title: Installation
+    url: /installation
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Repository info
+repository: adammoore/enact-hyku
