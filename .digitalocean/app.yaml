@@ -64,8 +64,6 @@ services:
       - key: SMTP_PASSWORD
         type: SECRET
         value: ${SMTP_PASSWORD}
-    routes:
-      - path: /
 
   # Background Workers (Sidekiq)
   - name: worker
