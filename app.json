@@ -1,0 +1,151 @@
+{
+  "name": "ENACT Hyku",
+  "description": "Practice Research Repository implementing PRVoices metadata schema - Built on Samvera Hyku",
+  "keywords": [
+    "ruby",
+    "rails",
+    "repository",
+    "samvera",
+    "hyku",
+    "practice-research",
+    "digital-repository"
+  ],
+  "website": "https://adammoore.github.io/enact-hyku/",
+  "repository": "https://github.com/adammoore/enact-hyku",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "bundle exec rails db:seed"
+  },
+  "env": {
+    "RAILS_ENV": {
+      "description": "Rails environment",
+      "value": "production",
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "description": "Enable logging to stdout",
+      "value": "true"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "description": "Enable Rails to serve static files",
+      "value": "true"
+    },
+    "SECRET_KEY_BASE": {
+      "description": "Secret key for Rails sessions",
+      "generator": "secret"
+    },
+    "HYKU_ADMIN_HOST": {
+      "description": "Admin host for Hyku (e.g., admin.yourdomain.com)",
+      "required": true
+    },
+    "HYKU_ADMIN_ONLY_TENANT_CREATION": {
+      "description": "Only allow admin to create tenants",
+      "value": "true"
+    },
+    "HYKU_MULTITENANT": {
+      "description": "Enable multi-tenancy",
+      "value": "true"
+    },
+    "HYKU_ROOT_HOST": {
+      "description": "Root host for Hyku tenants (e.g., yourdomain.com)",
+      "required": true
+    },
+    "FEDORA_URL": {
+      "description": "URL for external Fedora repository (required - see docs)",
+      "required": true
+    },
+    "SOLR_URL": {
+      "description": "URL for Solr search service (use Websolr addon or external)",
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "description": "AWS Access Key for S3 file storage",
+      "required": false
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "description": "AWS Secret Key for S3 file storage",
+      "required": false
+    },
+    "AWS_REGION": {
+      "description": "AWS Region for S3",
+      "value": "us-east-1",
+      "required": false
+    },
+    "AWS_BUCKET": {
+      "description": "S3 bucket name for file storage",
+      "required": false
+    },
+    "SMTP_ADDRESS": {
+      "description": "SMTP server address for email",
+      "required": false
+    },
+    "SMTP_PORT": {
+      "description": "SMTP server port",
+      "value": "587",
+      "required": false
+    },
+    "SMTP_USER_NAME": {
+      "description": "SMTP username",
+      "required": false
+    },
+    "SMTP_PASSWORD": {
+      "description": "SMTP password",
+      "required": false
+    },
+    "SMTP_DOMAIN": {
+      "description": "SMTP domain",
+      "required": false
+    },
+    "GOOGLE_ANALYTICS_ID": {
+      "description": "Google Analytics tracking ID",
+      "required": false
+    },
+    "GEONAMES_USERNAME": {
+      "description": "GeoNames API username for location lookups",
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-2x"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:standard-0",
+      "as": "DATABASE"
+    },
+    {
+      "plan": "heroku-redis:premium-0",
+      "as": "REDIS"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "stack": "heroku-24",
+  "environments": {
+    "test": {
+      "addons": [
+        "heroku-postgresql:hobby-dev",
+        "heroku-redis:hobby-dev"
+      ],
+      "formation": {
+        "web": {
+          "quantity": 1,
+          "size": "basic"
+        }
+      }
+    }
+  }
+}

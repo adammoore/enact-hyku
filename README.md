@@ -25,12 +25,30 @@ The repository implements the PRVoices metadata schema, which extends traditiona
 - **Portfolio Items**: Different types of research outputs with specialized metadata
 - **Relationships**: Links between works, publications, and institutional structures
 
-## Prerequisites
+## Quick Start
 
+### Heroku Deployment (Recommended)
+
+Deploy to Heroku with automatic deployment from GitHub:
+
+1. **Merge Hyku codebase**:
+   ```bash
+   ./scripts/merge_hyku.sh
+   ```
+
+2. **Follow Heroku deployment guide**: See [HEROKU_DEPLOYMENT.md](HEROKU_DEPLOYMENT.md)
+
+3. **Configure automatic deployment** from GitHub main branch in Heroku dashboard
+
+### Local Development
+
+Prerequisites:
 - Docker (tested with version 28.5.2)
 - Docker Compose (tested with version 2.40.3)
 - macOS or Linux
 - Internet connection for initial build
+
+Instructions coming soon once Hyku codebase is merged.
 
 ## Documentation
 
@@ -38,13 +56,10 @@ Comprehensive documentation is available at: https://adammoore.github.io/enact-h
 
 Topics covered:
 - Understanding the PRVoices schema
+- Heroku deployment guide
 - Installation and configuration
 - Creating practice research portfolios
 - Mapping research practices to metadata
-
-## Installation
-
-Detailed installation instructions will be provided once the Hyku configuration is complete.
 
 ## Project Status
 

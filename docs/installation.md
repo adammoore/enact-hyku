@@ -7,6 +7,26 @@ title: Installation
 
 This guide covers installing and configuring ENACT Hyku for practice research using the PRVoices schema.
 
+## Deployment Options
+
+ENACT Hyku can be deployed in multiple ways:
+
+1. **Heroku Deployment** (Recommended for quick start)
+   - Automatic deployment from GitHub
+   - Managed infrastructure
+   - See **[HEROKU_DEPLOYMENT.md](https://github.com/adammoore/enact-hyku/blob/main/HEROKU_DEPLOYMENT.md)** for complete guide
+   - Requires external Fedora and Solr services
+
+2. **Docker/Docker Compose** (For local development)
+   - Full local development environment
+   - Included Fedora, Solr, PostgreSQL, Redis
+   - Instructions below
+
+3. **Kubernetes/AWS** (For production at scale)
+   - Enterprise deployment
+   - High availability
+   - See Samvera Hyku documentation
+
 ## Prerequisites
 
 Before beginning, ensure you have:
