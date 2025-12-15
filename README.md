@@ -56,7 +56,7 @@ Deploy to Digital Ocean App Platform with automatic deployment from GitHub:
 - Automatic GitHub deployment
 - Cost-effective (~$90/month vs $200-400 on Heroku)
 - S3-compatible Spaces for file storage
-- Deployed in Amsterdam (ams3) region
+- Deployed in London (lon1) region
 
 ### Local Development
 

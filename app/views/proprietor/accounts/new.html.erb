@@ -1,0 +1,49 @@
+<% content_for :page_header do %>
+  <h1><span class="fa fa-gears"></span> <%= t('.header') %></h1>
+<% end %>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card account-form">
+      <%= simple_form_for @account, url: [:proprietor, @account], html: { class: 'form' } do |f| %>
+        <div class="card-body">
+          <% if @account.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger">
+              <%= pluralize(@account.errors.count, "error") %> prohibited this repository from being saved:
+              <ul>
+                <% @account.errors.messages.each do |key, messages| %>
+                  <li><%= key %> &quot;<%= @account.errors.details[key].first[:value] %>&quot; <%= messages.join(' and ') %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%= f.input :name %>
+
+          <div class="form-group">
+            <%= f.input :search_only, wrapper: false %>
+            <small class="form-text text-muted">
+              <strong>Note:</strong> Search-only accounts require at least one full account to be selected below for cross-tenant search.
+            </small>
+          </div>
+
+          <div class='hide' id='full_account_cross_container'>
+            <h4>Full Accounts for Cross-Tenant Search</h4>
+            <p class="text-muted">Select which repositories this search-only account will search across.</p>
+            <div id='full_acount_cross_searches'>
+              <%= f.simple_fields_for :full_account_cross_searches do |full_account_cross_search| %>
+                <%= render 'full_account_cross_search_fields', f: full_account_cross_search %>
+              <% end %>
+              <div class='links'>
+                <%= link_to_add_association 'Add account to search', f, :full_account_cross_searches, class: 'btn btn-sm btn-secondary' %>
+              </div>
+            </div>
+          </div>
+
+          <%= f.submit class: 'btn btn-primary' %>
+          <%= link_to t('simple_form.cancel'), proprietor_accounts_path, class: 'btn btn-link action-cancel' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

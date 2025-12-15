@@ -2,6 +2,7 @@
 
 # Environment files with secrets
 .env
+.env.*
 .env.local
 .env.production
 .env.*.local
@@ -15,6 +16,7 @@
 # Ruby/Rails
 *.gem
 *.rbc
+capybara-*.html
 /.config
 /coverage/
 /InstalledFiles
@@ -24,8 +26,17 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/log
 .bundle/
+/.bundle
 vendor/bundle
+/vendor/bundle
+vendor/engines
+.rspec
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
 
 # Rails
 /.yardoc
@@ -33,33 +44,49 @@ vendor/bundle
 /doc/
 /rdoc
 
-# If using SQLite
+# Database files
 /*.sqlite
 /*.sqlite3
 /*.sqlite3-journal
 /*.sqlite3-*
-
-# If using PostgreSQL or MySQL in development
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/postgres
+pg_upgrade_*.log
 /config/database.yml
 
-# Ignore uploaded files
-/public/system
-/public/uploads
+# Fedora repository data
+/fcrepo4-development-data
+/fcrepo4-test-data
+/fcrepo4-data
+fits.log
+solr_db_initialized
 
-# Ignore precompiled assets
+# Uploaded files
+/public/system
+/public/uv
+/public/uploads
+/public/branding
+
+# Precompiled assets
 /public/assets
 /public/packs
 /public/packs-test
 
-# Ignore node modules
+# Node modules
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore master key for decrypting credentials
+# Rails credentials
 /config/master.key
 /config/credentials/*.key
+
+# Settings files
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
 
 # Docker
 docker-compose.override.yml
@@ -75,6 +102,7 @@ docker-compose.override.yml
 *.swp
 *.swo
 *~
+*~undo-tree~
 
 # Logs
 *.log
@@ -90,7 +118,42 @@ tmp/**/*
 # Storage
 storage/*
 !storage/.keep
+/storage/files
 
 # Backups
 *.bak
 *.backup
+
+# Ruby version managers
+.rvmrc
+.ruby-*
+.tools-versions
+.tool-versions
+
+# Bower
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Pow
+.powenv
+
+# Byebug
+.byebug_history
+
+# MeSH data files (large, not source code)
+*.bin
+d*.bin
+c*.bin
+q*.bin
+
+# Google service account credentials
+config/google_service_account.json
+
+# Project-specific
+scratch.md
+/plans/*
+/bundler.d/
+.serena/*
+.claude/*
+CLAUDE.md
