@@ -16,8 +16,6 @@ services:
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
-    health_check:
-      http_path: /health
     envs:
       - key: RAILS_ENV
         value: production
