@@ -52,12 +52,11 @@ services:
 
   # Solr Search Engine
   - name: solr
-    github:
-      repo: adammoore/enact-hyku
-      branch: main
-      deploy_on_push: true
-    dockerfile_path: Dockerfile
-    build_command: docker build --target hyku-solr -t $IMAGE_NAME .
+    image:
+      registry_type: DOCKER_HUB
+      registry: library
+      repository: solr
+      tag: "8.3"
     instance_count: 1
     instance_size_slug: basic-xxs
     internal_ports:
