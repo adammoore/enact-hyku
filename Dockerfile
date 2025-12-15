@@ -1,5 +1,15 @@
 ARG HYRAX_IMAGE_VERSION=hyrax-v5.2.0
-FROM ghcr.io/samvera/hyrax/hyrax-base:$HYRAX_IMAGE_VERSION AS hyku-web
+
+# Solr stage (named for reference, not default)
+FROM solr:8.3 AS hyku-solr
+ENV SOLR_USER="solr" \
+    SOLR_GROUP="solr"
+USER root
+COPY --chown=solr:solr solr/security.json /var/solr/data/security.json
+USER $SOLR_USER
+
+# Base web application stage
+FROM ghcr.io/samvera/hyrax/hyrax-base:$HYRAX_IMAGE_VERSION AS hyku-base
 
 USER root
 RUN git config --system --add safe.directory \*
@@ -24,14 +34,11 @@ RUN yarn install
 RUN if [ "${ASSETS_PRECOMPILE:-true}" != "false" ]; then \
       RAILS_ENV=production SECRET_KEY_BASE=`bin/rails secret` DB_ADAPTER=nulldb DB_URL='postgresql://fake' bundle exec rake assets:precompile; \
     fi
-CMD ./bin/web
 
-FROM hyku-web AS hyku-worker
+# Worker stage
+FROM hyku-base AS hyku-worker
 CMD ./bin/worker
 
-FROM solr:8.3 AS hyku-solr
-ENV SOLR_USER="solr" \
-    SOLR_GROUP="solr"
-USER root
-COPY --chown=solr:solr solr/security.json /var/solr/data/security.json
-USER $SOLR_USER
+# Web stage (default - must be last!)
+FROM hyku-base AS hyku-web
+CMD ./bin/web
