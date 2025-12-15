@@ -5,6 +5,9 @@
 require 'sidekiq/web' if ENV.fetch('HYRAX_ACTIVE_JOB_QUEUE', 'sidekiq') == 'sidekiq'
 
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+  # Health check endpoint for load balancers (no auth required)
+  get '/health', to: 'health#show'
+
   resources :identity_providers
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   concern :iiif_search, BlacklightIiifSearch::Routes.new
