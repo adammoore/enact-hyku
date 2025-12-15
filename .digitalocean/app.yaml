@@ -101,7 +101,8 @@ services:
       tag: "8"
     instance_count: 1
     instance_size_slug: basic-s
-    http_port: 8983
+    internal_ports:
+      - 8983
     run_command: |
       solr-precreate hyku /opt/solr/server/solr/configsets/_default
     envs:
@@ -117,7 +118,8 @@ services:
       tag: "4.7.6"
     instance_count: 1
     instance_size_slug: basic-s
-    http_port: 8080
+    internal_ports:
+      - 8080
     envs:
       - key: CATALINA_OPTS
         value: -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC
