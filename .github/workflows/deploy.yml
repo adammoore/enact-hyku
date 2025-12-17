@@ -1,0 +1,51 @@
+name: Deploy to Digital Ocean Droplet
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          port: 22
+          script: |
+            cd /root/enact-hyku
+
+            echo "📥 Pulling latest changes from GitHub..."
+            git fetch origin
+            git pull origin main
+
+            echo "🔨 Precompiling assets..."
+            docker compose -f docker-compose.droplet.yml exec -T web rails assets:precompile
+
+            echo "🔄 Restarting services..."
+            docker compose -f docker-compose.droplet.yml restart web worker
+
+            echo "⏳ Waiting for services to be healthy..."
+            sleep 30
+
+            echo "✅ Checking deployment health..."
+            docker compose -f docker-compose.droplet.yml ps web
+
+            # Test if the application is responding
+            if curl -sf http://localhost:3000/health > /dev/null; then
+              echo "✅ Deployment successful! Enact is responding."
+            else
+              echo "⚠️  Warning: Health check endpoint not responding yet. Check logs if issues persist."
+            fi
+
+            echo "🎉 Deployment complete!"
