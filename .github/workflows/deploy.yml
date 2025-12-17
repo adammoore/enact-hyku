@@ -27,7 +27,15 @@ jobs:
 
             echo "📥 Pulling latest changes from GitHub..."
             git fetch origin
-            git pull origin main
+
+            # Stash any local changes to avoid conflicts
+            git stash --include-untracked || true
+
+            # Pull with rebase
+            git pull --rebase origin main
+
+            # Reapply stashed changes if any
+            git stash pop || true
 
             echo "🔨 Precompiling assets..."
             docker compose -f docker-compose.droplet.yml exec -T web rails assets:precompile
