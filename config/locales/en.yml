@@ -11,7 +11,7 @@ en:
       site:
         institution_name_full: Full institution name
   application:
-    tagline: The next-generation repository solution
+    tagline: "Enact: Practice Research Repository"
   blacklight:
     search:
       fields:

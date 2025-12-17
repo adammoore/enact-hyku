@@ -1,10 +1,17 @@
+// Enact Brand Colors
+$enact-primary-blue: #2C5282;
+$enact-dark-blue: #1A365D;
+$enact-light-gray: #E2E8F0;
+$enact-accent-green: #38A169;
+$enact-text-dark: #2D3748;
+
 $primary-font-family: "Lato", Helvetica, sans-serif;
 $splash-font-family: "Montserrat", "Lato", Helvetica, sans-serif;
 
 $jumbotron-heading-font-size: 2.5em;
-$jumbotron-heading-color: #30373b;
+$jumbotron-heading-color: $enact-text-dark;
 $jumbotron-sub-heading-color: #444;
-$jumbotron-button-background-color: #7ab55c;
+$jumbotron-button-background-color: $enact-primary-blue;
 
-$features-section-background-color: #f4f4f4;
+$features-section-background-color: $enact-light-gray;
 $features-section-border-color: #ddd;

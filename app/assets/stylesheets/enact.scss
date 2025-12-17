@@ -1,0 +1,78 @@
+/* Enact-specific branding styles */
+
+@import 'variables';
+
+// Primary color overrides
+.btn-primary {
+  background-color: $enact-primary-blue;
+  border-color: $enact-dark-blue;
+
+  &:hover {
+    background-color: $enact-dark-blue;
+  }
+}
+
+// Navbar branding
+.navbar-brand {
+  color: $enact-primary-blue;
+  font-weight: 600;
+}
+
+// Link colors for practice research theme
+a {
+  color: $enact-primary-blue;
+
+  &:hover {
+    color: $enact-dark-blue;
+  }
+}
+
+// Banner/jumbotron
+#banner.jumbotron {
+  background-color: $enact-light-gray;
+
+  h1 {
+    color: $enact-primary-blue;
+  }
+
+  .btn-sign-up {
+    background-color: $enact-primary-blue;
+    border-color: $enact-dark-blue;
+
+    &:hover {
+      background-color: $enact-dark-blue;
+    }
+  }
+}
+
+// Footer branding
+footer.navbar {
+  background-color: $enact-dark-blue;
+  color: $enact-light-gray;
+
+  a {
+    color: $enact-light-gray;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+// Logo styling
+#masthead #logo {
+  img {
+    max-height: 50px;
+  }
+}
+
+// Practice research highlight colors
+.portfolio-highlight,
+.ntro-badge {
+  background-color: $enact-accent-green;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}

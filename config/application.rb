@@ -159,7 +159,7 @@ module Hyku
     # @!attribute html_head_title
     #   The title to render for the application's HTML > HEAD > TITLE element.
     #   @return [String]
-    class_attribute :html_head_title, default: "Hyku", instance_accessor: false
+    class_attribute :html_head_title, default: "Enact", instance_accessor: false
 
     # @!attribute user_devise_parameters
     #   @return [Object]

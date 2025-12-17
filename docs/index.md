@@ -39,9 +39,15 @@ The [PRVoices schema](schema.html) addresses these gaps by providing:
 
 ## Documentation Structure
 
-- **[PRVoices Schema](schema.html)**: Technical overview of the metadata schema
+### For Users
+- **[User Guide](user-guide.html)**: Step-by-step guide for depositing practice research portfolios
+- **[NTRO Provenance Framework](ntro-provenance.html)**: Understanding provenance metadata for practice research
 - **[Research Practices](research-practices.html)**: How the schema reflects research practices and processes
+
+### For Administrators
+- **[PRVoices Schema](schema.html)**: Technical overview of the metadata schema
 - **[Installation](installation.html)**: Setting up your own instance
+- **[Configuration](configuration.html)**: Configuring your Enact instance
 - **[Digital Ocean Deployment](https://github.com/adammoore/enact-hyku/blob/main/DIGITALOCEAN_DEPLOYMENT.md)**: Production deployment guide
 
 ## Project Status
