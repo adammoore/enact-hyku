@@ -19,6 +19,8 @@ Traditional repository systems focus on preserving the final research output. Fo
 
 The NTRO Provenance Framework aligns with **FAIR** (Findable, Accessible, Interoperable, Reusable) and **CARE** (Collective Benefit, Authority to Control, Responsibility, Ethics) principles.
 
+> **For Administrators**: This document describes the Hyrax-specific implementation in Enact. For broader platform-agnostic approaches, phased implementation strategies, and practical guidance for DSpace, EPrints, Islandora, and other repository systems, see the **[Practical Provenance Implementation Guide](practical-provenance.html)**.
+
 ## Phase 1: Core NTRO Metadata (Implemented)
 
 ### Cultural Context & Origin

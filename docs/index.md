@@ -46,6 +46,7 @@ The [PRVoices schema](schema.html) addresses these gaps by providing:
 
 ### For Administrators
 - **[PRVoices Schema](schema.html)**: Technical overview of the metadata schema
+- **[Practical Provenance Implementation](practical-provenance.html)**: Phased approach to implementing provenance tracking across repository platforms
 - **[Installation](installation.html)**: Setting up your own instance
 - **[Configuration](configuration.html)**: Configuring your Enact instance
 - **[Digital Ocean Deployment](https://github.com/adammoore/enact-hyku/blob/main/DIGITALOCEAN_DEPLOYMENT.md)**: Production deployment guide
