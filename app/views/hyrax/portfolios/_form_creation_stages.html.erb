@@ -1,0 +1,66 @@
+<div class="form-group" data-behavior="creation-stages"
+     data-stages="<%= @form.model.creation_stages.to_json %>">
+  <label>Creation Stages</label>
+  <p class="help-text">Document the multi-stage creation process</p>
+
+  <button type="button" class="btn btn-secondary" data-behavior="add-stage">
+    <i class="fa fa-plus"></i> Add Stage
+  </button>
+
+  <table class="table table-striped mt-3 stages-table">
+    <thead>
+      <tr>
+        <th>Stage Type</th>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Contributors</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="stages-tbody"></tbody>
+  </table>
+</div>
+
+<script type="text/x-tmpl" id="tmpl-creation-stage">
+  <tr data-stage-index="{{= index }}">
+    <td>
+      <select name="portfolio[creation_stages][][stage_type]" class="form-control" required>
+        <option value="">Select Type...</option>
+        <option value="conception">Conception</option>
+        <option value="research">Research</option>
+        <option value="development">Development</option>
+        <option value="prototyping">Prototyping</option>
+        <option value="iteration">Iteration</option>
+        <option value="rehearsal">Rehearsal</option>
+        <option value="performance">Performance</option>
+        <option value="exhibition">Exhibition</option>
+        <option value="installation">Installation</option>
+        <option value="publication">Publication</option>
+        <option value="documentation">Documentation</option>
+        <option value="reflection">Reflection</option>
+      </select>
+    </td>
+    <td>
+      <input type="date" name="portfolio[creation_stages][][date]" class="form-control" />
+    </td>
+    <td>
+      <input type="text" name="portfolio[creation_stages][][location]"
+             class="form-control" placeholder="Location or venue" />
+    </td>
+    <td>
+      <textarea name="portfolio[creation_stages][][description]"
+                class="form-control" rows="2"
+                placeholder="Describe this stage..."></textarea>
+    </td>
+    <td>
+      <input type="text" name="portfolio[creation_stages][][contributors]"
+             class="form-control" placeholder="Comma-separated names" />
+    </td>
+    <td>
+      <button type="button" class="btn btn-danger btn-sm" data-behavior="remove-stage">
+        <i class="fa fa-trash"></i>
+      </button>
+    </td>
+  </tr>
+</script>

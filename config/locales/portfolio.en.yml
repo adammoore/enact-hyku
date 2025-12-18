@@ -1,0 +1,154 @@
+en:
+  hyrax:
+    icons:
+      portfolio:     'fa fa-briefcase'
+    select_type:
+      portfolio:
+        name:               "Portfolio"
+        description:        "Portfolio works for practice research with NTRO provenance tracking"
+  simple_form:
+    labels:
+      portfolio:
+        # PRVoices Schema Fields
+        portfolio_identifier: "Portfolio Identifier"
+        portfolio_identifier_type: "Identifier Type"
+        context_statement: "Context Statement"
+        project: "Project"
+        alternate_identifier: "Alternate Identifier"
+        alternate_identifier_type: "Alternate Identifier Type"
+        funder_name: "Funder Name"
+        funder_identifier: "Funder Identifier"
+        award_number: "Award Number"
+        award_title: "Award Title"
+        contributor_role: "Contributor Role"
+        contributor_orcid: "Contributor ORCID"
+        contributor_affiliation: "Contributor Affiliation"
+        date_type: "Date Type"
+        bibliographic_citation: "Bibliographic Citation"
+
+        # NTRO Cultural Context
+        cultural_origin: "Cultural Origin"
+        cultural_community: "Cultural Community"
+        indigenous_affiliation: "Indigenous Affiliation"
+        cultural_sensitivity_level: "Cultural Sensitivity Level"
+
+        # TK Labels
+        tk_labels: "Traditional Knowledge Labels"
+        tk_label_text: "TK Label Descriptions"
+        tk_attribution_requirement: "TK Attribution Requirements"
+
+        # Rights & Ownership
+        rights_holder_names: "Rights Holder Names"
+        rights_type: "Rights Type"
+        cultural_authority: "Cultural Authority"
+        ownership_percentage: "Ownership Percentage"
+
+        # Ethical & Process
+        ethical_clearance: "Ethical Clearance"
+        community_consultation_status: "Community Consultation Status"
+        research_methodology: "Research Methodology"
+        ethical_considerations: "Ethical Considerations"
+        process_narrative: "Process Narrative"
+
+        # Extended Contributors
+        contributor_role_extended: "Extended Contributor Roles"
+
+        # Versions & Transformations
+        version_type: "Version Type"
+        version_number: "Version Number"
+        transformation_type: "Transformation Type"
+        instantiation_type: "Instantiation Type"
+
+        # Temporal
+        creation_date_start: "Creation Start Date"
+        creation_date_end: "Creation End Date"
+        performance_date: "Performance Dates"
+        exhibition_date: "Exhibition Dates"
+
+        # JSON Fields
+        creation_stages_json: "Creation Stages (JSON)"
+        rights_holders_json: "Rights Holders Details (JSON)"
+        licenses_extended_json: "Extended Licenses (JSON)"
+        cultural_protocols_json: "Cultural Protocols (JSON)"
+        process_documentation_json: "Process Documentation (JSON)"
+
+        # Relationships
+        previous_version_id: "Previous Version"
+        newer_version_id: "Newer Version"
+        alternate_version_id: "Alternate Versions"
+        derivative_work_id: "Derivative Works"
+        performance_id: "Performance Records"
+        exhibition_id: "Exhibition Records"
+
+    hints:
+      portfolio:
+        # PRVoices Schema Fields
+        portfolio_identifier: "Persistent identifier for this portfolio (e.g., RAiD)"
+        portfolio_identifier_type: "Type of identifier (e.g., RAiD, DOI)"
+        context_statement: "Rich text description of the research context, framework, narrative, and insights"
+        project: "Link or identifier for the associated project"
+        alternate_identifier: "Additional identifiers for this portfolio (DOI, URL, etc.)"
+        alternate_identifier_type: "Type of alternate identifier"
+        funder_name: "Name of funding organization"
+        funder_identifier: "Persistent identifier for the funder (e.g., Crossref Funder ID, ROR)"
+        award_number: "Grant or award number"
+        award_title: "Title of the grant or award"
+        contributor_role: "Role of the contributor (e.g., Data Collector, Curator, Principal Investigator)"
+        contributor_orcid: "ORCID identifier for the contributor"
+        contributor_affiliation: "Institution or organization affiliation"
+        date_type: "Type of date (e.g., Issued, Conceptualized, Created)"
+        bibliographic_citation: "Preferred citation for this portfolio"
+
+        # NTRO Cultural Context
+        cultural_origin: "Cultural, community, or indigenous group origins (e.g., 'Maori', 'Yoruba', 'Australian Aboriginal')"
+        cultural_community: "Specific community or communities associated with this work"
+        indigenous_affiliation: "Indigenous peoples or nations associated with this work"
+        cultural_sensitivity_level: "Sensitivity classification: Public, Community Only, Restricted, Sacred"
+
+        # TK Labels
+        tk_labels: "Local Contexts TK Labels (e.g., TK A, TK CO, TK WG). See https://localcontexts.org/labels/traditional-knowledge-labels/"
+        tk_label_text: "Full text descriptions of applicable TK labels"
+        tk_attribution_requirement: "Specific attribution requirements mandated by TK labels"
+
+        # Rights & Ownership
+        rights_holder_names: "Names of individuals, collectives, or communities holding rights"
+        rights_type: "Type of rights: Copyright, Cultural Rights, Community Rights, Traditional Knowledge Rights"
+        cultural_authority: "Individual or body with cultural authority over this work"
+        ownership_percentage: "Percentage of ownership if shared (e.g., '50%', '33.3%')"
+
+        # Ethical & Process
+        ethical_clearance: "Ethics approval status and reference number"
+        community_consultation_status: "Status of community consultation: Completed, Ongoing, Planned, Not Required"
+        research_methodology: "Methodological approach used in creating this work"
+        ethical_considerations: "Ethical considerations and how they were addressed"
+        process_narrative: "Narrative description of the research/creative process"
+
+        # Extended Contributors
+        contributor_role_extended: "NTRO-specific roles: Performance, Curation, Installation, Direction, Choreography, Cultural Authority, Traditional Knowledge Holder, etc."
+
+        # Versions & Transformations
+        version_type: "Type: Draft, Final, Performance, Exhibition, Adaptation, Translation"
+        version_number: "Version identifier (e.g., '1.0', 'v2', 'Performance 2023')"
+        transformation_type: "How this version relates to previous: Derivative, Adaptation, Iteration, Remix"
+        instantiation_type: "Type of manifestation: Performance, Exhibition, Installation, Screening, Workshop"
+
+        # Temporal
+        creation_date_start: "Date when creation/research process began"
+        creation_date_end: "Date when creation/research process ended (leave blank if ongoing)"
+        performance_date: "Dates of performances of this work"
+        exhibition_date: "Dates of exhibitions of this work"
+
+        # JSON Fields
+        creation_stages_json: "Complex creation stage data (managed via form interface)"
+        rights_holders_json: "Complex rights holder data (managed via form interface)"
+        licenses_extended_json: "Complex licensing data (managed via form interface)"
+        cultural_protocols_json: "Cultural protocol data (managed via form interface)"
+        process_documentation_json: "Process documentation data (managed via form interface)"
+
+        # Relationships
+        previous_version_id: "Earlier version(s) of this work"
+        newer_version_id: "Later version(s) of this work"
+        alternate_version_id: "Alternative versions (e.g., different language, medium)"
+        derivative_work_id: "Works derived from this work"
+        performance_id: "Performances of this work"
+        exhibition_id: "Exhibitions of this work"
