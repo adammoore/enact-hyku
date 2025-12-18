@@ -134,6 +134,7 @@ jobs:
     if: always()
     needs: [test, lint]
     permissions:
+      contents: read
       checks: write
       issues: read
       pull-requests: write
