@@ -19,7 +19,7 @@ class User < ApplicationRecord
   devise(*Hyku::Application.user_devise_parameters)
 
   # NTRO Phase 3: Cultural profile attributes for TK label access control
-  serialize :cultural_affiliations, Array
+  serialize :cultural_affiliations, type: Array
   attribute :gender, :string
   attribute :initiated_member, :boolean, default: false
 
