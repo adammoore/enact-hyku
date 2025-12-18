@@ -18,6 +18,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise(*Hyku::Application.user_devise_parameters)
 
+  # NTRO Phase 3: Cultural profile attributes for TK label access control
+  serialize :cultural_affiliations, Array
+  attribute :gender, :string
+  attribute :initiated_member, :boolean, default: false
+
+  # Validation for gender field
+  validates :gender, inclusion: { in: %w[male female non-binary other prefer-not-to-say], allow_blank: true }
+
   after_create :add_default_group_membership!
   after_update :mark_all_undelivered_messages_as_delivered!, if: -> { batch_email_frequency == 'never' }
 

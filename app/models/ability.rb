@@ -15,6 +15,7 @@ class Ability
     user_roles
     work_roles
     featured_collection_abilities
+    tk_label_permissions
   ]
   # If the Groups with Roles feature is disabled, allow registered users to create curation concerns
   # (Works, Collections, and FileSets). Otherwise, omit this ability logic as to not
@@ -140,6 +141,46 @@ class Ability
       super
     else
       false
+    end
+  end
+
+  # TK Label Permissions
+  # Enforces Traditional Knowledge label-based access restrictions
+  def tk_label_permissions
+    # Portfolio works with TK labels
+    can :read, Portfolio do |work|
+      TkPermissionService.new(current_user, work).can_view?
+    end
+
+    can :download, Portfolio do |work|
+      TkPermissionService.new(current_user, work).can_download?
+    end
+
+    # Also check SolrDocument representations of Portfolios
+    can :read, SolrDocument do |solr_doc|
+      next true unless solr_doc['has_model_ssim']&.include?('Portfolio')
+      next true if solr_doc['tk_labels_tesim'].blank?
+
+      # Need to load the actual Portfolio to check permissions
+      begin
+        work = Portfolio.find(solr_doc.id)
+        TkPermissionService.new(current_user, work).can_view?
+      rescue ActiveFedora::ObjectNotFoundError
+        false
+      end
+    end
+
+    can :download, SolrDocument do |solr_doc|
+      next true unless solr_doc['has_model_ssim']&.include?('Portfolio')
+      next true if solr_doc['tk_labels_tesim'].blank?
+
+      # Need to load the actual Portfolio to check permissions
+      begin
+        work = Portfolio.find(solr_doc.id)
+        TkPermissionService.new(current_user, work).can_download?
+      rescue ActiveFedora::ObjectNotFoundError
+        false
+      end
     end
   end
 end
