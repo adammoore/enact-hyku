@@ -3,7 +3,8 @@
 redis_url = ENV.fetch('REDIS_URL', false)
 if redis_url
   session_url = "#{redis_url}/session"
-  secure = Rails.env.production? || Rails.env.staging?
+  # Only use secure cookies if FORCE_SSL is enabled
+  secure = ActiveModel::Type::Boolean.new.cast(ENV.fetch('FORCE_SSL', 'true'))
   key = Rails.env.production? ? "_hyku_session" : "_hyku_session_#{Rails.env}"
 
   Rails.application.config.session_store :redis_store,
