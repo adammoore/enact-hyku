@@ -22,7 +22,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: samvera/hyku
+  IMAGE_NAME: ${{ github.repository }}
   DOCKER_BUILDKIT: 1
   COMPOSE_DOCKER_CLI_BUILD: 1
 
@@ -77,7 +77,7 @@ jobs:
           platforms: linux/${{ env.PLATFORM_TAG }}
           target: hyku-${{ matrix.component }}
           cache-from: |
-            type=registry,ref=ghcr.io/samvera/hyku/${{ matrix.component }}:latest
+            type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.component }}:latest
           cache-to: type=inline
           push: true
           tags: |
