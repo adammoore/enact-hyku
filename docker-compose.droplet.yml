@@ -1,8 +1,6 @@
 # Docker Compose for Digital Ocean Droplet Deployment
 # Builds containers locally instead of using pre-built images
 
-version: '3.8'
-
 x-app: &app
   build:
     context: .
